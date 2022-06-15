@@ -27,16 +27,15 @@ const bookSeats = () => {
   for (let j = 0; j < verticalSeats.length; j++) {
     for (let i = 0; i < horizontalSeats.length; i++) {
       seats1.push(
-        <div
-          key={i + "" + j}
-          className="w-6 h-6 cursor-pointer my-2  flex justify-center items-center bg-slate-500 "
-        >
-          {j == 0 && <span className="mb-12 ml-4">{i + 1}</span>}
-          <span className="opacity-0">
-            {verticalSeats[j]}
-            {horizontalSeats[i]}
-          </span>
-          {i == 0 && <span className="mr-20 absolute">{verticalSeats[j]}</span>}
+        <div key={i + "" + j} className="">
+          {j == 0 && <span className="mb-12 ">{i + 1}</span>}
+          <span
+            className="w-6 h-6 cursor-pointer my-2  flex justify-center items-center bg-slate-500 "
+            id={`${i + 1}${verticalSeats[j]}`}
+          ></span>
+          {i == 0 && (
+            <span className="-ml-7 absolute -mt-8">{verticalSeats[j]}</span>
+          )}
         </div>
       );
     }
@@ -45,23 +44,25 @@ const bookSeats = () => {
   for (let j = 0; j < verticalSeats.length; j++) {
     for (let i = 0; i < secondSetOfSeats.length; i++) {
       seats2.push(
-        <div
-          key={i + "" + j}
-          className="w-6 h-6 cursor-pointer my-2  flex justify-center items-center bg-slate-500 "
-        >
+        <div key={i + "" + j} className="">
           {j == 0 && <span className="mb-12 ml-4">{i + 4}</span>}
 
-          <span className="opacity-0">
-            {verticalSeats[j]}
-            {secondSetOfSeats[i]}
-          </span>
+          <span
+            className=" w-6 h-6 cursor-pointer my-2  flex justify-center items-center bg-slate-500 "
+            id={`${i + 4}${verticalSeats[j]}`}
+          ></span>
         </div>
       );
     }
   }
 
   const handleSelectedSeat = (e) => {
-    console.log(e.target.innerText, "check");
+    // console.log(e.target.innerText, "check");
+    const col = document.getElementById(e.target.id);
+    if (col?.classList?.contains("opacity-0"))
+      col?.classList?.remove("opacity-0");
+    console.log(col);
+    if (col?.style) col.style.backgroundColor = "green";
   };
 
   return (
