@@ -57,12 +57,16 @@ const bookSeats = () => {
   }
 
   const handleSelectedSeat = (e) => {
-    // console.log(e.target.innerText, "check");
+    const green = "rgb(65, 190, 71)";
+    const gray = "rgb(100,116,139)";
     const col = document.getElementById(e.target.id);
     if (col?.classList?.contains("opacity-0"))
       col?.classList?.remove("opacity-0");
-    console.log(col);
-    if (col?.style) col.style.backgroundColor = "green";
+    if (col?.style) {
+      if (col?.style.backgroundColor == green) {
+        col.style.backgroundColor = gray;
+      } else col.style.backgroundColor = green;
+    }
   };
 
   return (
