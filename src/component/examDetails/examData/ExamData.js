@@ -11,7 +11,7 @@ export const ExamData = () => {
 
   return (
     <Link href="/userDetails">
-      <div className="mt-24 bg-gray-400 p-4 rounded-md flex justify-start items-center cursor-pointer">
+      <div className="mt-24 shadow-lg bg-gray-400 p-4 rounded-md flex justify-start items-center cursor-pointer">
         <Image
           src={list?.image || "/public/vercel.svg"}
           alt="placeholder"

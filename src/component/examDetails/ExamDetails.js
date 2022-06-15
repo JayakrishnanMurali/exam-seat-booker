@@ -12,7 +12,7 @@ export const ExamDetails = () => {
   }, [dispatch]);
 
   return (
-    <div className="col-span-4 py-4 px-24 flex flex-col">
+    <div className="py-4 px-24 flex flex-col">
       <ExamData />
       <RegisteredUsers />
     </div>

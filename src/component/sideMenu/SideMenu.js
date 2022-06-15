@@ -1,5 +1,5 @@
 import React from "react";
-
+import Link from "next/link";
 export const SideMenu = () => {
   return (
     <div className="bg-gray-500 h-screen p-4">
@@ -8,9 +8,14 @@ export const SideMenu = () => {
       </h2>
 
       <div className="mt-12 gap-4 flex flex-col">
-        <h4 className="bg-gray-50 p-2 cursor-pointer rounded-md text-lg shadow-sm hover:bg-slate-200 transition-colors ease-in-out delay-100">
-          HOME
-        </h4>
+        <Link href="/">
+          <h4
+            className="bg-gray-50 p-2 cursor-pointer rounded-md text-lg shadow-sm
+          hover:bg-slate-200 transition-colors ease-in-out delay-100"
+          >
+            HOME
+          </h4>
+        </Link>
         <h4 className="bg-gray-50 p-2 cursor-pointer rounded-md text-lg shadow-sm hover:bg-slate-200 transition-colors ease-in-out delay-100">
           PROFILE
         </h4>
