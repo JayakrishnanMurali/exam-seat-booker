@@ -27,8 +27,16 @@ const bookSeats = () => {
   for (let j = 0; j < verticalSeats.length; j++) {
     for (let i = 0; i < horizontalSeats.length; i++) {
       seats1.push(
-        <div className="w-6 h-6 cursor-pointer my-2 mx-0 flex justify-center items-center bg-slate-500 ">
-          [{verticalSeats[j]} {horizontalSeats[i]}]
+        <div
+          key={i + "" + j}
+          className="w-6 h-6 cursor-pointer my-2  flex justify-center items-center bg-slate-500 "
+        >
+          {j == 0 && <span className="mb-12 ml-4">{i + 1}</span>}
+          <span className="opacity-0">
+            {verticalSeats[j]}
+            {horizontalSeats[i]}
+          </span>
+          {i == 0 && <span className="mr-20 absolute">{verticalSeats[j]}</span>}
         </div>
       );
     }
@@ -37,20 +45,39 @@ const bookSeats = () => {
   for (let j = 0; j < verticalSeats.length; j++) {
     for (let i = 0; i < secondSetOfSeats.length; i++) {
       seats2.push(
-        <div className="w-6 h-6 cursor-pointer my-2 mx-0 flex justify-center items-center bg-slate-500 ">
-          [{verticalSeats[j]} {secondSetOfSeats[i]}]
+        <div
+          key={i + "" + j}
+          className="w-6 h-6 cursor-pointer my-2  flex justify-center items-center bg-slate-500 "
+        >
+          {j == 0 && <span className="mb-12 ml-4">{i + 4}</span>}
+
+          <span className="opacity-0">
+            {verticalSeats[j]}
+            {secondSetOfSeats[i]}
+          </span>
         </div>
       );
     }
   }
 
-  return (
-    <div className="p-6 ">
-      <h1>Select Seats</h1>
+  const handleSelectedSeat = (e) => {
+    console.log(e.target.innerText, "check");
+  };
 
-      <div className="flex">
-        <div className="w-1/12 mr-12 grid grid-cols-3">{seats1}</div>
-        <div className="w-1/12 grid grid-cols-3">{seats2}</div>
+  return (
+    <div className="p-12">
+      <h1 className="text-2xl font-semibold mb-8">Select Seats</h1>
+
+      <div className="flex mb-4">
+        <div
+          className="w-1/12 mr-12 grid grid-cols-3"
+          onClick={handleSelectedSeat}
+        >
+          {seats1}
+        </div>
+        <div className="w-1/12 grid grid-cols-3" onClick={handleSelectedSeat}>
+          {seats2}
+        </div>
       </div>
 
       <Link href="/">
