@@ -1,24 +1,33 @@
 import Image from "next/image";
 import React from "react";
+import Link from "next/link";
+import { useSelector } from "react-redux";
+import { selectExam } from "../../../redux/examDetails/ExamSlice";
 
 export const ExamData = () => {
-  return (
-    <div className="mt-24 bg-gray-400 p-4 rounded-md flex justify-start items-center cursor-pointer">
-      <Image
-        src={
-          "https://img.freepik.com/free-photo/exams-test-student-high-school-university-student-holding-pencil-testing-exam-answer-sheet_4236-1316.jpg"
-        }
-        alt="placeholder"
-        width={200}
-        height={150}
-        className="object-cover"
-      />
+  const {
+    exam: { list },
+  } = useSelector(selectExam);
 
-      <div className="m-4">
-        <h4>Title</h4>
-        <h6>Year</h6>
-        <p>Details1</p>
+  return (
+    <Link href="/userDetails">
+      <div className="mt-24 bg-gray-400 p-4 rounded-md flex justify-start items-center cursor-pointer">
+        <Image
+          src={list?.image || "/public/vercel.svg"}
+          alt="placeholder"
+          width={200}
+          height={150}
+          className="object-cover"
+        />
+
+        <div className="m-4">
+          <h4 className="text-3xl font-medium text-white mb-4">
+            {list?.title}
+          </h4>
+          <h6 className="text-lg font-normal text-white">{list?.year}</h6>
+          <p className="text-lg text-white font-normal">{list?.detail1}</p>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 };
