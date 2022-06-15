@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { useState } from "react";
+import lStorage from "local-storage";
 
 const horizontalSeats = ["1", "2", "3"];
 const verticalSeats = [
@@ -58,21 +59,59 @@ const BookSeats = () => {
   }
 
   const [prevCol, setPrevCol] = useState();
+  const gender = lStorage.get("userGender");
+  const age = lStorage.get("userAge");
 
   const handleSelectedSeat = (e) => {
     const green = "rgb(65, 190, 71)";
     const gray = "rgb(100,116,139)";
     const col = document.getElementById(e.target.id);
-    if (col?.style) {
-      if (col?.style.backgroundColor == green) {
-        col.style.backgroundColor = gray;
-      } else {
-        if (prevCol?.style) prevCol.style.backgroundColor = gray;
-        col.style.backgroundColor = green;
-      }
-    }
 
-    setPrevCol(col);
+    if (col?.id) {
+      if (gender == "Female") {
+        const isSeatOnAisle =
+          col.id.slice(-2, -1) == 3 || col.id.slice(-2, -1) == 4;
+
+        if (isSeatOnAisle)
+          return alert(
+            "Females cant select aisle seats. Please choose any other seat!"
+          );
+      }
+
+      if (age <= 20) {
+        const isUserAgeLessThan20 =
+          col.id.slice(-2, -1) == 1 || col.id.slice(-2, -1) == 6;
+
+        if (isUserAgeLessThan20)
+          return alert(
+            "Users aged less than or equal to 20 cannot select seats on column 1 and 6. Please choose any other seat!"
+          );
+      }
+
+      if (age >= 30) {
+        const isUserAgeGreaterThan30 =
+          col.id.slice(-1) == "H" ||
+          col.id.slice(-1) == "I" ||
+          col.id.slice(-1) == "J" ||
+          col.id.slice(-1) == "K" ||
+          col.id.slice(-1) == "L" ||
+          col.id.slice(-1) == "M";
+        if (isUserAgeGreaterThan30)
+          return alert(
+            "Users aged greater than or equal to 30 cannot select seats on last 6 rows. Please choose any other seat!"
+          );
+      }
+
+      if (col?.style) {
+        if (col?.style.backgroundColor == green) {
+          col.style.backgroundColor = gray;
+        } else {
+          if (prevCol?.style) prevCol.style.backgroundColor = gray;
+          col.style.backgroundColor = green;
+        }
+      }
+      setPrevCol(col);
+    }
   };
 
   return (
