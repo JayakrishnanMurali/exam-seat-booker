@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { useState } from "react";
 
 const horizontalSeats = ["1", "2", "3"];
 const verticalSeats = [
@@ -20,7 +21,7 @@ const verticalSeats = [
 
 const secondSetOfSeats = ["4", "5", "6"];
 
-const bookSeats = () => {
+const BookSeats = () => {
   const seats1 = [];
   const seats2 = [];
 
@@ -56,17 +57,22 @@ const bookSeats = () => {
     }
   }
 
+  const [prevCol, setPrevCol] = useState();
+
   const handleSelectedSeat = (e) => {
     const green = "rgb(65, 190, 71)";
     const gray = "rgb(100,116,139)";
     const col = document.getElementById(e.target.id);
-    if (col?.classList?.contains("opacity-0"))
-      col?.classList?.remove("opacity-0");
     if (col?.style) {
       if (col?.style.backgroundColor == green) {
         col.style.backgroundColor = gray;
-      } else col.style.backgroundColor = green;
+      } else {
+        if (prevCol?.style) prevCol.style.backgroundColor = gray;
+        col.style.backgroundColor = green;
+      }
     }
+
+    setPrevCol(col);
   };
 
   return (
@@ -94,4 +100,4 @@ const bookSeats = () => {
   );
 };
 
-export default bookSeats;
+export default BookSeats;
