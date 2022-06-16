@@ -35,7 +35,7 @@ const BookSeats = () => {
   useEffect(() => {
     const gray = "rgb(156,163,175)";
 
-    selectedSeats.map((seat) => {
+    selectedSeats?.map((seat) => {
       const box = document.getElementById(seat);
       box.style.backgroundColor = gray;
     });

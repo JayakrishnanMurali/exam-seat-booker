@@ -13,7 +13,10 @@ export const ExamData = () => {
     <Link href="/userDetails">
       <div className="mt-24 shadow-lg bg-gray-400 p-4 rounded-md flex justify-start items-center cursor-pointer">
         <Image
-          src={list?.image || "/public/vercel.svg"}
+          src={
+            list?.image ||
+            "https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png?w=640"
+          }
           alt="placeholder"
           width={200}
           height={150}
