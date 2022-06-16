@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { useState } from "react";
 import lStorage from "local-storage";
+import { useEffect } from "react";
 
 const horizontalSeats = ["1", "2", "3"];
 const verticalSeats = [
@@ -25,16 +26,49 @@ const secondSetOfSeats = ["4", "5", "6"];
 const BookSeats = () => {
   const seats1 = [];
   const seats2 = [];
+  const gender = lStorage.get("userGender");
+  const age = lStorage.get("userAge");
+  const selectedSeats = lStorage.get("Seat");
+
+  const [selectedSeat, setSelectedSeat] = useState();
+
+  useEffect(() => {
+    const gray = "rgb(156,163,175)";
+
+    selectedSeats.map((seat) => {
+      const box = document.getElementById(seat);
+      box.style.backgroundColor = gray;
+    });
+  }, []);
 
   for (let j = 0; j < verticalSeats.length; j++) {
     for (let i = 0; i < horizontalSeats.length; i++) {
+      let currElement2 = <></>;
+
+      const isAgeGreaterThan30 = age >= 30 && j >= 7;
+      const isAgeLessThan20 = age <= 20 && (i == 0 || i == 6);
+      const isgenderFemale = gender == "Female" && i == 2;
+
+      if (isgenderFemale || isAgeLessThan20 || isAgeGreaterThan30) {
+        currElement2 = (
+          <span
+            className=" w-6 h-6 cursor-pointer my-2  flex justify-center items-center bg-gray-400"
+            id={`${i + 1}${verticalSeats[j]}`}
+          ></span>
+        );
+      } else {
+        currElement2 = (
+          <span
+            className="w-6 h-6 cursor-pointer my-2  flex justify-center items-center bg-green-300 "
+            id={`${i + 1}${verticalSeats[j]}`}
+          ></span>
+        );
+      }
+
       seats1.push(
         <div key={i + "" + j} className="">
           {j == 0 && <span className="mb-12 ">{i + 1}</span>}
-          <span
-            className="w-6 h-6 cursor-pointer my-2  flex justify-center items-center bg-slate-500 "
-            id={`${i + 1}${verticalSeats[j]}`}
-          ></span>
+          {currElement2}
           {i == 0 && (
             <span className="-ml-7 absolute -mt-8">{verticalSeats[j]}</span>
           )}
@@ -45,26 +79,42 @@ const BookSeats = () => {
 
   for (let j = 0; j < verticalSeats.length; j++) {
     for (let i = 0; i < secondSetOfSeats.length; i++) {
+      let currElement = <></>;
+
+      const isAgeGreaterThan30 = age >= 30 && j >= 7;
+      const isAgeLessThan20 = age <= 20 && i == 2;
+      const isgenderFemale = gender == "Female" && i == 0;
+
+      if (isgenderFemale || isAgeLessThan20 || isAgeGreaterThan30) {
+        currElement = (
+          <span
+            className=" w-6 h-6 cursor-pointer my-2  flex justify-center items-center bg-gray-400"
+            id={`${i + 4}${verticalSeats[j]}`}
+          ></span>
+        );
+      } else {
+        currElement = (
+          <span
+            className=" w-6 h-6 cursor-pointer my-2  flex justify-center items-center bg-green-300 "
+            id={`${i + 4}${verticalSeats[j]}`}
+          ></span>
+        );
+      }
+
       seats2.push(
         <div key={i + "" + j} className="">
           {j == 0 && <span className="mb-12 ml-4">{i + 4}</span>}
-
-          <span
-            className=" w-6 h-6 cursor-pointer my-2  flex justify-center items-center bg-slate-500 "
-            id={`${i + 4}${verticalSeats[j]}`}
-          ></span>
+          {currElement}
         </div>
       );
     }
   }
 
   const [prevCol, setPrevCol] = useState();
-  const gender = lStorage.get("userGender");
-  const age = lStorage.get("userAge");
 
   const handleSelectedSeat = (e) => {
-    const green = "rgb(65, 190, 71)";
-    const gray = "rgb(100,116,139)";
+    const gray = "rgb(156,163,175)";
+    const eligibleGreenColor = "rgb(134,239,172)";
     const col = document.getElementById(e.target.id);
 
     if (col?.id) {
@@ -102,16 +152,29 @@ const BookSeats = () => {
           );
       }
 
+      if (selectedSeats?.includes(col.id))
+        return alert(
+          "Seat already selected by other user. Please choose another seat!"
+        );
+
       if (col?.style) {
-        if (col?.style.backgroundColor == green) {
-          col.style.backgroundColor = gray;
+        if (col?.style.backgroundColor == gray) {
+          col.style.backgroundColor = eligibleGreenColor;
         } else {
-          if (prevCol?.style) prevCol.style.backgroundColor = gray;
-          col.style.backgroundColor = green;
+          if (prevCol?.style)
+            prevCol.style.backgroundColor = eligibleGreenColor;
+          col.style.backgroundColor = gray;
         }
       }
+      setSelectedSeat(col?.id);
       setPrevCol(col);
     }
+  };
+
+  const handleSubmit = () => {
+    if (lStorage.get("Seat"))
+      lStorage.set("Seat", [...lStorage.get("Seat"), selectedSeat]);
+    else lStorage.set("Seat", [selectedSeat]);
   };
 
   return (
@@ -131,7 +194,10 @@ const BookSeats = () => {
       </div>
 
       <Link href="/">
-        <button className="bg-green-400 w-1/5 p-2 rounded-md mt-2 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed">
+        <button
+          onClick={handleSubmit}
+          className="bg-green-400 w-1/5 p-2 rounded-md mt-2 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed"
+        >
           Submit
         </button>
       </Link>

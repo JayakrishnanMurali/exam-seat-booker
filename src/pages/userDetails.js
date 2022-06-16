@@ -24,9 +24,15 @@ const UserDetails = () => {
   const [userGender, setUserGender] = useState();
 
   const storeUserInfoOnLocalStorage = () => {
-    lStorage.set("userName", userName);
-    lStorage.set("userAge", userAge);
-    lStorage.set("userGender", userGender);
+    const userData = {
+      userName,
+      userAge,
+      userGender,
+    };
+
+    if (lStorage.get("userData")) {
+      lStorage.set("userData", [...lStorage.get("userData"), userData]);
+    } else lStorage.set("userData", [userData]);
   };
 
   return (
