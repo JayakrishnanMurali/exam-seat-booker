@@ -27,9 +27,9 @@ const BookSeats = () => {
   const seats1 = [];
   const seats2 = [];
   const gender =
-    lStorage.get("userData")[lStorage.get("userData")?.length - 1].userGender;
+    lStorage.get("userData")[lStorage?.get("userData")?.length - 1].userGender;
   const age =
-    lStorage.get("userData")[lStorage.get("userData")?.length - 1].userAge;
+    lStorage.get("userData")[lStorage?.get("userData")?.length - 1].userAge;
   const selectedSeats = lStorage.get("Seat");
 
   const [selectedSeat, setSelectedSeat] = useState();
